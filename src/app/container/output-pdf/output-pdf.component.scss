@@ -1,0 +1,22 @@
+// style container
+.output-pdf-viewer {
+  padding-top: 90px;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  position: relative;
+  background-color: rgba(#ddd, 0.5);
+
+  // pdf viewer overwriting styles
+  ::ng-deep {
+    .pdfViewer {
+      .page {
+        border: none;
+        border-image: none;
+        -webkit-border-image: none;
+        box-shadow: 1px 0 5px -3px rgba(#000, 0.2);
+        margin-bottom: 15px;
+      }
+    }
+  }
+}

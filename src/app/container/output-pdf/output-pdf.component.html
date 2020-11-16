@@ -1,0 +1,18 @@
+<!-- header part -->
+<app-header></app-header>
+
+<!-- pdf-viewer section -->
+<div class="output-pdf-viewer">
+  <pdf-viewer
+    [src]="pdfSrc"
+    [(page)]="pageVariable"
+    [show-all]="true"
+    [stick-to-page]="true"
+    [render-text]="true"
+    [original-size]="false"
+    [fit-to-page]="true"
+    [autoresize]="true"
+    [show-borders]="true"
+    #pdfViewer
+  ></pdf-viewer>
+</div>

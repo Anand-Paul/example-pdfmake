@@ -1,0 +1,84 @@
+// header styles
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  min-height: 75px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  z-index: 10;
+  padding: 0 30px;
+  display: flex;
+
+  &__content-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  &__filename,
+  &__page-indicator,
+  &__pdf-controls {
+    display: flex;
+    width: auto;
+  }
+
+  //  filename section
+  &__filename {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+
+  // page indicator section
+  &__page-indicator {
+    align-items: center;
+    justify-self: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &-current {
+      font-weight: bold;
+    }
+
+    &-separator {
+      margin: 0 5px;
+    }
+
+    &-total {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  // button styles in header
+  &__btn {
+    padding: 8px 12px;
+    margin-left: 10px;
+    text-transform: uppercase;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    display: flex;
+
+    // button active and hover states styles
+    &:active,
+    &:hover {
+      background-color: #0069d9;
+      border-color: #0062cc;
+    }
+  }
+}

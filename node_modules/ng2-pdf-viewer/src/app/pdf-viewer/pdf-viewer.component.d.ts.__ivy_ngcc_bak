@@ -1,0 +1,88 @@
+/**
+ * Created by vadimdez on 21/06/16.
+ */
+import { ElementRef, EventEmitter, OnChanges, SimpleChanges, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { PDFDocumentProxy, PDFSource, PDFProgressData } from 'pdfjs-dist';
+export declare enum RenderTextMode {
+    DISABLED = 0,
+    ENABLED = 1,
+    ENHANCED = 2
+}
+export declare class PdfViewerComponent implements OnChanges, OnInit, OnDestroy, AfterViewChecked {
+    private element;
+    pdfViewerContainer: any;
+    private isVisible;
+    static CSS_UNITS: number;
+    static BORDER_WIDTH: number;
+    private pdfMultiPageViewer;
+    private pdfMultiPageLinkService;
+    private pdfMultiPageFindController;
+    private pdfSinglePageViewer;
+    private pdfSinglePageLinkService;
+    private pdfSinglePageFindController;
+    private _cMapsUrl;
+    private _renderText;
+    private _renderTextMode;
+    private _stickToPage;
+    private _originalSize;
+    private _pdf;
+    private _page;
+    private _zoom;
+    private _zoomScale;
+    private _rotation;
+    private _showAll;
+    private _canAutoResize;
+    private _fitToPage;
+    private _externalLinkTarget;
+    private _showBorders;
+    private lastLoaded;
+    private _latestScrolledPage;
+    private resizeTimeout;
+    private pageScrollTimeout;
+    private isInitialized;
+    private loadingTask;
+    afterLoadComplete: EventEmitter<PDFDocumentProxy>;
+    pageRendered: EventEmitter<CustomEvent<any>>;
+    textLayerRendered: EventEmitter<CustomEvent<any>>;
+    onError: EventEmitter<any>;
+    onProgress: EventEmitter<PDFProgressData>;
+    pageChange: EventEmitter<number>;
+    src: string | Uint8Array | PDFSource;
+    cMapsUrl: string;
+    page: any;
+    renderText: boolean;
+    renderTextMode: RenderTextMode;
+    originalSize: boolean;
+    showAll: boolean;
+    stickToPage: boolean;
+    zoom: number;
+    zoomScale: 'page-height' | 'page-fit' | 'page-width';
+    rotation: number;
+    externalLinkTarget: string;
+    autoresize: boolean;
+    fitToPage: boolean;
+    showBorders: boolean;
+    static getLinkTarget(type: string): any;
+    static setExternalLinkTarget(type: string): void;
+    constructor(element: ElementRef);
+    ngAfterViewChecked(): void;
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    onPageResize(): void;
+    readonly pdfLinkService: any;
+    readonly pdfViewer: any;
+    readonly pdfFindController: any;
+    ngOnChanges(changes: SimpleChanges): void;
+    updateSize(): void;
+    clear(): void;
+    private setupMultiPageViewer;
+    private setupSinglePageViewer;
+    private getValidPageNumber;
+    private getDocumentParams;
+    private loadPDF;
+    private update;
+    private render;
+    private getScale;
+    private getCurrentViewer;
+    private resetPdfDocument;
+}
