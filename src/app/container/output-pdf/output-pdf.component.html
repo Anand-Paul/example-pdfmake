@@ -1,5 +1,15 @@
 <!-- header part -->
-<app-header></app-header>
+<app-header
+  [fileName]="fileName"
+  [currentPage]="pageVariable"
+  [totalPages]="totalPages"
+  [zoomAmt]="zoom"
+  [zoomMax]="zoomMax"
+  [zoomMin]="zoomMin"
+  (setZoom)="setZoom($event)"
+  (download)="download()"
+  (print)="print()"
+></app-header>
 
 <!-- pdf-viewer section -->
 <div class="output-pdf-viewer">
@@ -13,6 +23,9 @@
     [fit-to-page]="true"
     [autoresize]="true"
     [show-borders]="true"
+    [zoom-scale]="zoomScale"
+    [zoom]="zoom"
+    (after-load-complete)="afterLoadComplete($event)"
     #pdfViewer
   ></pdf-viewer>
 </div>
