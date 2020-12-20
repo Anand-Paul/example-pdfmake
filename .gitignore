@@ -1,3 +1,6 @@
-node_modules
+
+# dependencies
+/node_modules
+package-lock.json
 
 .vscode

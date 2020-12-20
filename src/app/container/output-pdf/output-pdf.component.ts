@@ -1,13 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { PDFDocumentProxy } from "ng2-pdf-viewer";
+import { HttpClient } from "@angular/common/http";
 
+// importing the fonts and icons needed
+import pdfFonts from "./../../../assets/vfs_fonts.js";
+import { fonts } from "./../../config/pdfFonts";
+import { styles, defaultStyle } from "./../../config/customStyles";
+
+// import the pdfmake library
+import pdfMake from "pdfmake/build/pdfmake";
+
+// PDFMAKE fonts
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+pdfMake.fonts = fonts;
 @Component({
   selector: "app-output-pdf",
   templateUrl: "./output-pdf.component.html",
   styleUrls: ["./output-pdf.component.scss"],
 })
 export class OutputPdfComponent implements OnInit {
-  pdfSrc = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf"; // this sample, dynamic one we will generate with the pdfmake
+  pdfSrc; // this sample, dynamic one we will generate with the pdfmake
   pageVariable = 1;
 
   // Initialize variables required for the header and this component
@@ -20,10 +32,15 @@ export class OutputPdfComponent implements OnInit {
   zoomScale = "page-width"; // zoom scale based on the page-width
   totalPages = 0; // indicates the total number of pages in the pdf document
   pdf: PDFDocumentProxy; // to access pdf information from the pdf viewer
+  documentDefinition: object;
+  generatedPDF: any;
+  pdfData;
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getData();
+  }
 
   // zoom functionality for the pdf viewer
   setZoom(type: string): void {
@@ -105,5 +122,51 @@ export class OutputPdfComponent implements OnInit {
   afterLoadComplete(pdf: PDFDocumentProxy): void {
     this.pdf = pdf;
     this.totalPages = pdf.numPages;
+  }
+
+  generatePDF(): void {
+    // All the contents required goes here
+    this.documentDefinition = {
+      info: {
+        title: this.pdfData.title,
+        author: this.pdfData.author,
+        subject: this.pdfData.subject,
+        keywords: this.pdfData.keywords,
+        creator: this.pdfData.creator,
+        creationDate: new Date(),
+      },
+      pageSize: "A4",
+      pageOrientation: "landscape",
+      pageMargins: [40, 60, 40, 60], // left, top, right, bottom margin values
+      content: [
+        {
+          text: "Sample test to check the font",
+          style: "head", // normal text with custom font
+        },
+        {
+          text: ">",
+          font: "Icomoon", // icon intgerated to the pdfmake document
+          fontSize: 18,
+        },
+      ], // it will be discussed later
+      styles,
+      defaultStyle,
+    };
+
+    // Generating the pdf
+    this.generatedPDF = pdfMake.createPdf(this.documentDefinition);
+    // This generated pdf buffer is used for the download, print and for viewing
+    this.generatedPDF.getBuffer((buffer) => {
+      this.pdfSrc = buffer;
+    });
+  }
+
+  getData(): void {
+    this.httpClient.get("assets/data.json").subscribe((data) => {
+      if (data) {
+        this.pdfData = data;
+        this.generatePDF();
+      }
+    });
   }
 }
